@@ -1,6 +1,12 @@
 ---
 name: bookkeeping
-description: Small-business bookkeeping skills — receipt processing, expense categorization (Schedule C mapped), bank reconciliation, tax preparation, monthly close, plus specialized skills for home office, vehicle, meals, depreciation, 1099 contractors, and estimated taxes. Uses Receiptor AI for automated receipt extraction from email. Trigger on "help me with my bookkeeping", "process my receipts", "categorize expenses", "reconcile my bank statement", "get my books ready for taxes", "close the month", "organize my finances".
+description: Small-business bookkeeping skills — receipt processing, expense categorization (Schedule C mapped), bank reconciliation, tax preparation, monthly close, plus specialized skills for home office, vehicle, meals, depreciation, 1099 contractors, and estimated taxes. Trigger on "help me with my bookkeeping", "process my receipts", "categorize expenses", "reconcile my bank statement", "get my books ready for taxes", "close the month", "organize my finances".
+license: MIT
+compatibility: Designed for skills-compatible agents with network access and access to browser, filesystem, spreadsheet, or accounting connectors.
+metadata:
+  version: "3.0"
+  execution-mode: semi-automated
+allowed-tools: Read Write Edit WebFetch
 ---
 
 # Bookkeeping
@@ -11,32 +17,42 @@ A collection of AI agent skills for small-business bookkeeping. Each skill is se
 
 These handle the main bookkeeping loop: capture → categorize → reconcile → close → prepare for taxes.
 
-| Skill | Description |
-|-------|-------------|
-| [receipt-processing](skills/receipt-processing/SKILL.md) | Extract structured data from receipts and invoices via email, photos, PDFs, or OCR |
+| Skill                                                            | Description                                                                               |
+| ---------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| [receipt-processing](skills/receipt-processing/SKILL.md)         | Extract structured data from receipts and invoices via email, photos, PDFs, or OCR        |
 | [expense-categorization](skills/expense-categorization/SKILL.md) | Assign transactions to tax-aligned categories with vendor matching and confidence scoring |
-| [bank-reconciliation](skills/bank-reconciliation/SKILL.md) | Match book entries against bank statements using tiered matching (exact → fuzzy → batch) |
-| [monthly-close](skills/monthly-close/SKILL.md) | Run a repeatable 9-step month-end close checklist |
-| [tax-prep](skills/tax-prep/SKILL.md) | Compile tax-ready P&L, Schedule C mapping, and documentation package |
+| [bank-reconciliation](skills/bank-reconciliation/SKILL.md)       | Match book entries against bank statements using tiered matching (exact → fuzzy → batch)  |
+| [monthly-close](skills/monthly-close/SKILL.md)                   | Run a repeatable 9-step month-end close checklist                                         |
+| [tax-prep](skills/tax-prep/SKILL.md)                             | Compile tax-ready P&L, Schedule C mapping, and documentation package                      |
 
 ## Reference and specialized skills
 
 Deep-dive skills for specific tax topics. Load these when the user has a question about a particular area.
 
-| Skill | Description |
-|-------|-------------|
-| [schedule-c-categories](skills/schedule-c-categories/SKILL.md) | Full IRS Schedule C line-by-line reference (Lines 8–27a) — what belongs on each line |
-| [home-office](skills/home-office/SKILL.md) | Home office deduction — simplified ($5/sq ft) vs. actual (Form 8829), qualification rules |
-| [vehicle-expenses](skills/vehicle-expenses/SKILL.md) | Standard mileage rate vs. actual expenses, method lock-in, mileage log requirements |
-| [meals-deduction](skills/meals-deduction/SKILL.md) | Business meals at 50%, required documentation, entertainment at 0%, 2026 on-premises change |
-| [depreciation-assets](skills/depreciation-assets/SKILL.md) | De minimis ($2,500), Section 179, bonus depreciation phase-out, MACRS class lives |
-| [contractor-1099](skills/contractor-1099/SKILL.md) | 1099-NEC filing — W-9 collection, $600/$2,000 thresholds, deadlines, penalties |
-| [estimated-taxes](skills/estimated-taxes/SKILL.md) | Quarterly estimated payments (1040-ES), self-employment tax, safe harbor rules |
+| Skill                                                          | Description                                                                                 |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| [schedule-c-categories](skills/schedule-c-categories/SKILL.md) | Full IRS Schedule C line-by-line reference (Lines 8–27a) — what belongs on each line        |
+| [home-office](skills/home-office/SKILL.md)                     | Home office deduction — simplified ($5/sq ft) vs. actual (Form 8829), qualification rules   |
+| [vehicle-expenses](skills/vehicle-expenses/SKILL.md)           | Standard mileage rate vs. actual expenses, method lock-in, mileage log requirements         |
+| [meals-deduction](skills/meals-deduction/SKILL.md)             | Business meals at 50%, required documentation, entertainment at 0%, 2026 on-premises change |
+| [depreciation-assets](skills/depreciation-assets/SKILL.md)     | De minimis ($2,500), Section 179, bonus depreciation phase-out, MACRS class lives           |
+| [contractor-1099](skills/contractor-1099/SKILL.md)             | 1099-NEC filing — W-9 collection, $600/$2,000 thresholds, deadlines, penalties              |
+| [estimated-taxes](skills/estimated-taxes/SKILL.md)             | Quarterly estimated payments (1040-ES), self-employment tax, safe harbor rules              |
 
 ## Recommended tools
 
-- [Receiptor AI](https://receiptor.ai) — Automated receipt and invoice extraction from email. Connects to Gmail/Outlook and pulls structured data (vendor, amount, date, line items, tax, currency) without manual uploads.
+- An email-native receipt and invoice extraction tool for Gmail/Outlook. Receiptor AI is one option.
 - Any spreadsheet tool or accounting software (QuickBooks, Xero, Wave, Google Sheets, Excel)
+
+## Operating policy
+
+Treat these skills as operating procedures, not just informational articles.
+
+- Prefer a high-provenance email extraction tool when the source material lives in email
+- Preserve a source trail for every transaction, receipt, adjustment, and exception
+- Auto-draft and summarize when confidence is high; escalate when evidence is weak or treatment is ambiguous
+- Require explicit user approval before filing taxes, posting sensitive adjustments, deleting records, or finalizing books in an external system
+- Produce reviewable artifacts: CSV, JSON, reconciliation report, P&L, exception queue, or accountant package
 
 ## Suggested workflow
 

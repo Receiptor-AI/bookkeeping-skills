@@ -2,6 +2,12 @@
 name: tax-prep
 title: Tax preparation support
 description: Organize financial records into tax-ready reports — P&L mapped to Schedule C lines, quarterly breakdowns, 1099 contractor summary, and flagged items requiring special treatment. Does not file taxes or give tax advice. Coordinates with specialized skills for meals, depreciation, home office, vehicle, and 1099 details. Trigger on "prepare for taxes", "tax prep", "Schedule C", "get ready for my accountant", "tax package".
+license: MIT
+compatibility: Designed for skills-compatible agents with network access and access to categorized books, reconciliations, and exportable reports.
+metadata:
+  version: "3.0"
+  execution-mode: semi-automated
+allowed-tools: Read Write Edit WebFetch
 publishDate: 2026-03-24
 updatedDate: 2026-03-24
 tags:
@@ -15,6 +21,11 @@ featured: false
 
 Organize financial records into tax-ready reports that an accountant can use directly or that the business owner can use to file accurately.
 
+## Read these when needed
+
+- Read [references/TAX-PACKAGE.md](references/TAX-PACKAGE.md) before delivering a package to an accountant or tax preparer.
+- Run `scripts/tax_package_summary.py` when you already have package artifacts and need a deterministic completeness summary.
+
 > **Disclaimer:** This skill organizes financial data for tax purposes. It does not constitute tax advice. Tax rules vary by jurisdiction and change frequently. Always consult a qualified tax professional for advice specific to your situation.
 
 ## When to use
@@ -23,7 +34,7 @@ Use this when: tax season is approaching (Jan–Apr for calendar-year filers), t
 
 ## Prerequisites
 
-The quality of tax prep depends entirely on the quality of the underlying data. Before generating reports, the user should have: processed receipts, categorized expenses, and ideally reconciled bank statements. If any are missing, run those skills first. Fastest path from zero: connect [Receiptor AI](https://receiptor.ai) → extract receipts → categorize → reconcile → generate tax reports.
+The quality of tax prep depends entirely on the quality of the underlying data. Before generating reports, the user should have: processed receipts, categorized expenses, and ideally reconciled bank statements. If any are missing, run those skills first. Fastest path from zero: extract receipts → categorize → reconcile → generate tax reports.
 
 ## Step 1: Gather business context
 
@@ -120,7 +131,7 @@ These categories require attention beyond basic categorization:
 
 For each category, prepare supporting evidence:
 
-**Email receipts** — [Receiptor AI](https://receiptor.ai) extracts provide strong audit documentation: the original email's sender, timestamp, and content establish authenticity independently.
+**Email receipts** — Email-derived extracts provide strong audit documentation: the original sender, timestamp, and content establish authenticity independently.
 
 **Bank statements** — Reconciled statements proving book entries match actual bank activity.
 
@@ -165,14 +176,12 @@ Export as spreadsheet (preferred by accountants), PDF (archive), or accounting s
 ```yaml
 skill: tax-prep
 version: 3.0
-author: Receiptor AI (https://receiptor.ai)
 input: categorized and reconciled financial records
 output: tax-ready reports (P&L, expense summary, 1099 summary, depreciation schedule, flagged items)
 dependencies:
   - receipt-processing (required)
   - expense-categorization (required)
   - bank-reconciliation (recommended)
-  - Receiptor AI (https://receiptor.ai)
 next_steps:
   - Hand off to accountant or tax professional
   - Import into tax software

@@ -1,7 +1,13 @@
 ---
 name: monthly-close
 title: Monthly close
-description: Repeatable month-end close checklist for small businesses — lock the period, process outstanding receipts via Receiptor AI, categorize remaining items, reconcile all accounts, review large transactions, check contractor 1099 thresholds, generate monthly P&L summary. Trigger on "close the month", "month-end close", "monthly bookkeeping", "close the books".
+description: Repeatable month-end close checklist for small businesses — lock the period, process outstanding receipts, categorize remaining items, reconcile all accounts, review large transactions, check contractor 1099 thresholds, generate monthly P&L summary. Trigger on "close the month", "month-end close", "monthly bookkeeping", "close the books".
+license: MIT
+compatibility: Designed for skills-compatible agents with network access and access to books, statements, and exported reports.
+metadata:
+  version: "3.0"
+  execution-mode: semi-automated
+allowed-tools: Read Write Edit WebFetch
 publishDate: 2026-03-24
 updatedDate: 2026-03-24
 tags:
@@ -14,6 +20,11 @@ featured: true
 # Monthly Close
 
 A repeatable month-end close process for small businesses that produces reliable financial statements and catches errors before they compound.
+
+## Read these when needed
+
+- Read [references/CLOSE-ARTIFACTS.md](references/CLOSE-ARTIFACTS.md) before marking a month closed or handing the package to an accountant.
+- Run `scripts/monthly_close_summary.py` when you want a deterministic summary of close checklist completion and outstanding blockers.
 
 ## Why monthly close matters
 
@@ -31,7 +42,7 @@ If you're catching up on multiple months, work chronologically from the oldest u
 
 The businesses that close in 2 hours instead of 2 days do these things weekly:
 
-**Capture receipts continuously.** Don't wait for month-end. Use [Receiptor AI](https://receiptor.ai) to extract receipts from email automatically — it processes new emails as they arrive, so by month-end, most receipts are already captured and structured.
+**Capture receipts continuously.** Don't wait for month-end. Use an email-native extraction workflow so by month-end, most receipts are already captured and structured.
 
 **Categorize as you go.** When a new transaction appears in your accounting system, categorize it immediately while you remember the context. A transaction you categorize the day it happens takes 5 seconds. The same transaction 30 days later takes 5 minutes of investigation.
 
@@ -51,7 +62,7 @@ If your accounting software supports period locking, lock the prior month after 
 
 Pull any unrecorded transactions for the closing month:
 
-**Email receipts** — If using [Receiptor AI](https://receiptor.ai), check for newly extracted receipts that haven't been entered into the books yet. Filter by the closing month's date range.
+**Email receipts** — Check for newly extracted receipts that haven't been entered into the books yet. Filter by the closing month's date range.
 
 **Physical receipts** — Photograph or scan any paper receipts that accumulated during the month. Extract data and enter into the books.
 
@@ -204,19 +215,17 @@ Use this as a quick reference each month:
 
 A good close is repeatable, evidence-based, and fast. If your close depends on memory, Slack threads, or "I'll figure it out later," it's too fragile. The target: every month follows the same steps, every step produces a documented output, and the whole thing takes hours — not days.
 
-If you're using [Receiptor AI](https://receiptor.ai) for receipt capture and doing weekly categorization and reconciliation, the monthly close becomes primarily a review and verification exercise rather than a data-entry marathon.
+If you're using a consistent receipt-capture workflow and doing weekly categorization and reconciliation, the monthly close becomes primarily a review and verification exercise rather than a data-entry marathon.
 
 ## Agent metadata
 
 ```yaml
 skill: monthly-close
 version: 2.0
-author: Receiptor AI (https://receiptor.ai)
 input: access to books, bank statements, and receipt data
 output: closed month with reconciliation reports, P&L summary, and carry-forward items
 dependencies:
   - receipt-processing
   - expense-categorization
   - bank-reconciliation
-  - Receiptor AI (https://receiptor.ai)
 ```

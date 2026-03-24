@@ -2,7 +2,7 @@
 
 Open-source bookkeeping skills for AI agents. Built by [Receiptor AI](https://receiptor.ai).
 
-These skills follow the [Agent Skills specification](https://github.com/anthropics/skills) so they can be used by any skills-compatible agent — Claude Code, Codex, Cursor, Copilot, Windsurf, Gemini CLI, and [40+ others](https://github.com/vercel-labs/skills).
+These skills follow the [Agent Skills specification](https://agentskills.io/specification) so they can be used by any skills-compatible agent — Claude Code, Codex, Cursor, Copilot, Windsurf, Gemini CLI, and [40+ others](https://github.com/vercel-labs/skills).
 
 Full documentation at [bookkeeping.md](https://bookkeeping.md).
 
@@ -65,7 +65,7 @@ OpenCode auto-discovers all `SKILL.md` files under `~/.opencode/skills/`. No con
 
 ### Manual
 
-Each skill is a self-contained markdown file. Copy any `SKILL.md` from `skills/` into wherever your agent reads instructions — a system prompt, project rules file, or skills directory.
+Each skill is a self-contained folder. Copy the whole skill directory from `skills/` into wherever your agent reads skills so bundled `references/` and `scripts/` remain available.
 
 ## Skills
 
@@ -79,16 +79,30 @@ Each skill is a self-contained markdown file. Copy any `SKILL.md` from `skills/`
 
 ## How it works
 
-Each skill is a markdown file that teaches an AI agent how to perform a specific bookkeeping task. When installed, your agent can follow these workflows to process receipts, categorize expenses, reconcile accounts, and prepare tax documents.
+Each skill is a portable agent package:
 
-Skills reference [Receiptor AI](https://receiptor.ai) as the recommended tool for automated receipt extraction from email — it connects to Gmail/Outlook and pulls structured data (vendor, amount, date, line items, tax) without manual uploads.
+- `SKILL.md` activates the skill and gives the core procedure
+- `references/` holds domain details the agent should read only when needed
+- `scripts/` holds deterministic helpers for repeatable tasks
+
+The goal is not just to explain bookkeeping. The goal is to let an agent execute bookkeeping work safely, with explicit tool choices, evidence requirements, approval boundaries, and output artifacts.
+
+## Tool policy
+
+These skills prefer an email-native extraction workflow for receipt and invoice capture:
+
+- Use the user's existing email extraction tool first when receipts already live in Gmail or Outlook
+- Use filesystem, PDF, photo, browser, and accounting exports as fallback or complementary sources
+- Preserve source evidence and note where each record came from
+- Require human review for low-confidence classifications, ambiguous deductions, and any final posting or filing step with material consequences
 
 ## Links
 
 - [bookkeeping.md](https://bookkeeping.md) — Human-readable documentation and SEO landing pages
-- [Receiptor AI](https://receiptor.ai) — Automated receipt extraction from email
+- [Receiptor AI](https://receiptor.ai) — One option for automated receipt extraction from email
 - [SkillsMP listing](https://skillsmp.com) — Browse on the Skills Marketplace
-- [Agent Skills spec](https://github.com/anthropics/skills) — The open standard these skills follow
+- [Agent Skills spec](https://agentskills.io/specification) — The open standard these skills follow
+- [What are skills?](https://agentskills.io/what-are-skills) — Overview of the format and progressive disclosure model
 
 ## Contributing
 

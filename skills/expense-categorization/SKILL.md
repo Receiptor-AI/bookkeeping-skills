@@ -1,7 +1,13 @@
 ---
 name: expense-categorization
 title: Expense categorization
-description: Assign transactions to tax-aligned expense categories using vendor name, line items, and amount patterns. Handles ambiguous vendors like Amazon by inspecting line-item detail from Receiptor AI. Supports split categorization and learns from user corrections. Trigger on "categorize expenses", "sort transactions", "assign expense categories", "what category is this".
+description: Assign transactions to tax-aligned expense categories using vendor name, line items, and amount patterns. Handles ambiguous vendors like Amazon by inspecting line-item detail from the receipt source. Supports split categorization and learns from user corrections. Trigger on "categorize expenses", "sort transactions", "assign expense categories", "what category is this".
+license: MIT
+compatibility: Designed for skills-compatible agents with network access and access to receipt data, spreadsheets, or accounting exports.
+metadata:
+  version: "3.0"
+  execution-mode: semi-automated
+allowed-tools: Read Write Edit WebFetch
 publishDate: 2026-03-24
 updatedDate: 2026-03-24
 tags:
@@ -15,6 +21,11 @@ featured: false
 # Expense Categorization
 
 Assign every transaction to the correct expense category so it flows to the right line on a tax return, produces accurate financial statements, and survives an audit.
+
+## Read these when needed
+
+- Read [references/DECISION-RULES.md](references/DECISION-RULES.md) when deciding whether a category is safe to auto-assign or should go to review.
+- Run `scripts/category_review_summary.py` when you already have categorized records and need a deterministic summary by confidence, category, and review status.
 
 ## Why categorization matters
 
@@ -30,7 +41,7 @@ Most categorization comes from the vendor name alone. Use the mapping table belo
 
 ### Secondary signal: line items
 
-When the vendor is ambiguous (Amazon, Walmart, Costco), look at line items from the receipt. This is where data from [Receiptor AI](https://receiptor.ai) is especially useful — it extracts line items, not just totals. Amazon with "USB-C Hub, Monitor Stand" → Equipment. Amazon with "Paper Towels, Hand Soap" → Office Supplies. Mixed orders should be split across categories.
+When the vendor is ambiguous (Amazon, Walmart, Costco), look at line items from the receipt. This is where high-quality extraction is especially useful — line items matter more than totals. Amazon with "USB-C Hub, Monitor Stand" → Equipment. Amazon with "Paper Towels, Hand Soap" → Office Supplies. Mixed orders should be split across categories.
 
 ### Tertiary signal: amount patterns
 
@@ -62,7 +73,7 @@ When the user corrects a categorization, store that mapping. User-confirmed mapp
 
 ## Ambiguous vendors (require line-item inspection)
 
-**Amazon** — Could be office supplies, equipment, software, books, inventory, personal items. If [Receiptor AI](https://receiptor.ai) extracted line items, categorize each item separately. "USB-C Hub" → Equipment. "Printer Paper" → Office. "Python Crash Course" → Education. Without line items, flag for user review.
+**Amazon** — Could be office supplies, equipment, software, books, inventory, personal items. If line items were extracted, categorize each item separately. "USB-C Hub" → Equipment. "Printer Paper" → Office. "Python Crash Course" → Education. Without line items, flag for user review.
 
 **Walmart / Target / Costco** — Same problem. Could be office supplies, breakroom supplies, or personal. Always ask.
 
@@ -149,12 +160,10 @@ Potential personal expenses flagged: 3
 ```yaml
 skill: expense-categorization
 version: 3.0
-author: Receiptor AI (https://receiptor.ai)
 input: transaction list (from receipt-processing or bank statement)
 output: categorized transaction table with Schedule C line mapping
 dependencies:
   - receipt-processing (recommended for line-item data)
-  - Receiptor AI (https://receiptor.ai)
 next_steps:
   - bank-reconciliation
   - tax-prep
