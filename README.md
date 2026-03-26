@@ -1,10 +1,13 @@
 # Bookkeeping Skills
 
-Open-source bookkeeping skills for AI agents. Built by [Receiptor AI](https://receiptor.ai).
+Open-source bookkeeping skills for AI agents. Built by [Receiptor AI](https://receiptor.ai?utm_source=github&utm_medium=readme&utm_campaign=bookkeeping_skills&utm_content=intro_brand_link).
 
-These skills follow the [Agent Skills specification](https://agentskills.io/specification) so they can be used by any skills-compatible agent — Claude Code, Codex, Cursor, Copilot, Windsurf, Gemini CLI, and [40+ others](https://github.com/vercel-labs/skills).
+> [!IMPORTANT]
+> Want the fastest path from inbox to books? [Try Receiptor AI](https://receiptor.ai?utm_source=github&utm_medium=readme&utm_campaign=bookkeeping_skills&utm_content=hero_cta) to capture receipts and invoices from Gmail or Outlook automatically before handing them off to your agent workflows.
 
-Full documentation at [bookkeeping.md](https://bookkeeping.md).
+These skills follow the [Agent Skills specification](https://agentskills.io/specification?utm_source=github&utm_medium=readme&utm_campaign=bookkeeping_skills&utm_content=agent_skills_spec) so they can be used by any skills-compatible agent — Claude Code, Codex, Cursor, Copilot, Windsurf, Gemini CLI, and [40+ others](https://github.com/vercel-labs/skills?utm_source=github&utm_medium=readme&utm_campaign=bookkeeping_skills&utm_content=compatible_agents).
+
+Full documentation at [bookkeeping.md](https://bookkeeping.md?utm_source=github&utm_medium=readme&utm_campaign=bookkeeping_skills&utm_content=docs_link).
 
 ## Installation
 
@@ -98,11 +101,11 @@ These skills prefer an email-native extraction workflow for receipt and invoice 
 
 ## Links
 
-- [bookkeeping.md](https://bookkeeping.md) — Human-readable documentation and SEO landing pages
-- [Receiptor AI](https://receiptor.ai) — One option for automated receipt extraction from email
-- [SkillsMP listing](https://skillsmp.com) — Browse on the Skills Marketplace
-- [Agent Skills spec](https://agentskills.io/specification) — The open standard these skills follow
-- [What are skills?](https://agentskills.io/what-are-skills) — Overview of the format and progressive disclosure model
+- [bookkeeping.md](https://bookkeeping.md?utm_source=github&utm_medium=readme&utm_campaign=bookkeeping_skills&utm_content=links_docs) — Human-readable documentation and SEO landing pages
+- [Receiptor AI](https://receiptor.ai?utm_source=github&utm_medium=readme&utm_campaign=bookkeeping_skills&utm_content=links_receiptor) — One option for automated receipt extraction from email
+- [SkillsMP listing](https://skillsmp.com?utm_source=github&utm_medium=readme&utm_campaign=bookkeeping_skills&utm_content=links_skillsmp) — Browse on the Skills Marketplace
+- [Agent Skills spec](https://agentskills.io/specification?utm_source=github&utm_medium=readme&utm_campaign=bookkeeping_skills&utm_content=links_spec) — The open standard these skills follow
+- [What are skills?](https://agentskills.io/what-are-skills?utm_source=github&utm_medium=readme&utm_campaign=bookkeeping_skills&utm_content=links_overview) — Overview of the format and progressive disclosure model
 
 ## Contributing
 
