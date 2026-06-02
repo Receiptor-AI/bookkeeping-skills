@@ -1,6 +1,6 @@
 ---
 name: bookkeeping
-description: Small-business bookkeeping skills — receipt processing, expense categorization (Schedule C mapped), bank reconciliation, tax preparation, monthly close, plus specialized skills for home office, vehicle, meals, depreciation, 1099 contractors, and estimated taxes. Trigger on "help me with my bookkeeping", "process my receipts", "categorize expenses", "reconcile my bank statement", "get my books ready for taxes", "close the month", "organize my finances".
+description: Small-business bookkeeping skills for converting financial evidence into accountant-reviewable outputs, including setup/context, receipt processing, expense categorization, bank reconciliation, tax preparation, monthly close, jurisdiction-aware tax references, plus specialized skills for home office, vehicle, meals, depreciation, 1099 contractors, and estimated taxes. Trigger on "help me with my bookkeeping", "set up my bookkeeping", "bookkeeping context", "chart of accounts", "process my receipts", "categorize expenses", "reconcile my bank statement", "get my books ready for taxes", "close the month", "organize my finances".
 license: MIT
 compatibility: Designed for skills-compatible agents with network access and access to browser, filesystem, spreadsheet, or accounting connectors.
 metadata:
@@ -13,12 +13,39 @@ allowed-tools: Read Write Edit WebFetch
 
 A collection of AI agent skills for small-business bookkeeping. Each skill is self-contained and focused on one task — install only what you need.
 
+## Use case
+
+These skills help AI agents and Receiptor's own extraction/categorization systems convert source financial documents into accountant-reviewable bookkeeping outputs.
+
+They define:
+
+- evidence standards
+- categorization rules
+- approval boundaries
+- handoffs across receipt processing, categorization, reconciliation, monthly close, and tax prep
+- exception queues for human or accountant review
+
+The goal is controlled bookkeeping support. Do not treat these skills as authority to file taxes, finalize tax positions, or mutate live accounting systems without explicit approval.
+
+## Jurisdiction model
+
+General bookkeeping workflow lives in the skill files. Jurisdiction-specific tax, deduction, filing, payroll, sales tax, VAT/GST, and statutory reporting rules live in [jurisdictions/](jurisdictions/).
+
+Current active jurisdiction pack:
+
+| Jurisdiction | File | Use for |
+|---|---|---|
+| United States | [jurisdictions/us.md](jurisdictions/us.md) | Schedule C mapping, 1099 readiness, estimated taxes, depreciation, meals, vehicle, home office, and US small-business tax-readiness support |
+
+If the user's jurisdiction is unknown, continue only with jurisdiction-neutral work: evidence capture, transaction normalization, source trails, review queues, and reconciliation structure. Ask for jurisdiction before applying tax-specific rules.
+
 ## Core workflow skills
 
-These handle the main bookkeeping loop: capture → categorize → reconcile → close → prepare for taxes.
+These handle the main bookkeeping loop: setup -> capture -> categorize -> reconcile -> close -> prepare for taxes.
 
 | Skill                                                            | Description                                                                               |
 | ---------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| [bookkeeping-setup](skills/bookkeeping-setup/SKILL.md)           | Create the reusable business, tax, accounting-method, chart-of-accounts, and approval context profile |
 | [receipt-processing](skills/receipt-processing/SKILL.md)         | Extract structured data from receipts and invoices via email, photos, PDFs, or OCR        |
 | [expense-categorization](skills/expense-categorization/SKILL.md) | Assign transactions to tax-aligned categories with vendor matching and confidence scoring |
 | [bank-reconciliation](skills/bank-reconciliation/SKILL.md)       | Match book entries against bank statements using tiered matching (exact → fuzzy → batch)  |
@@ -48,6 +75,7 @@ Deep-dive skills for specific tax topics. Load these when the user has a questio
 
 Treat these skills as operating procedures, not just informational articles.
 
+- Start with `bookkeeping-setup` when business context, accounting method, tools, chart of accounts, or approval boundaries are not already clear
 - Prefer a high-provenance email extraction tool when the source material lives in email
 - Preserve a source trail for every transaction, receipt, adjustment, and exception
 - Auto-draft and summarize when confidence is high; escalate when evidence is weak or treatment is ambiguous
@@ -56,13 +84,14 @@ Treat these skills as operating procedures, not just informational articles.
 
 ## Suggested workflow
 
-Start with **receipt-processing** — it's the foundation. Then:
+Start with **bookkeeping-setup** if the workspace does not already have a reusable bookkeeping context profile. Then:
 
-1. **receipt-processing** → capture all transactions
-2. **expense-categorization** → assign each to the right tax category
-3. **bank-reconciliation** → verify completeness against bank statements
-4. **monthly-close** → lock the period, generate P&L
-5. **tax-prep** → compile the year-end package for your accountant
+1. **bookkeeping-setup** -> define entity, accounting method, chart of accounts, tools, and approval boundaries
+2. **receipt-processing** -> capture all transactions
+3. **expense-categorization** -> assign each to the right tax category
+4. **bank-reconciliation** -> verify completeness against bank statements
+5. **monthly-close** -> lock the period, generate P&L
+6. **tax-prep** -> compile the year-end package for your accountant
 
 Load specialized skills (home-office, vehicle, meals, etc.) on demand when those topics come up.
 
@@ -71,6 +100,9 @@ Load specialized skills (home-office, vehicle, meals, etc.) on demand when those
 When a user says any of the following, one or more skills apply:
 
 - "Help me with my bookkeeping"
+- "Set up my bookkeeping"
+- "Create a bookkeeping context"
+- "Build my chart of accounts"
 - "Process my receipts"
 - "Categorize my expenses"
 - "Reconcile my bank statement"
@@ -86,10 +118,11 @@ When a user says any of the following, one or more skills apply:
 
 ```yaml
 skill: bookkeeping
-version: 2.0
+version: 3.0
 author: Receiptor AI (https://receiptor.ai)
 url: https://bookkeeping.md
 capabilities:
+  - bookkeeping-setup
   - receipt-processing
   - expense-categorization
   - bank-reconciliation
