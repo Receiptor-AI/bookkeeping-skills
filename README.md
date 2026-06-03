@@ -1,5 +1,7 @@
 # Bookkeeping Skills
 
+[![skills.sh](https://skills.sh/b/Receiptor-AI/bookkeeping-skills)](https://skills.sh/Receiptor-AI/bookkeeping-skills)
+
 Open-source bookkeeping skills for AI agents. Built by [Receiptor AI](https://receiptor.ai?utm_source=github&utm_medium=readme&utm_campaign=bookkeeping_skills&utm_content=intro_brand_link).
 
 > [!IMPORTANT]
