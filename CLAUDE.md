@@ -1,3 +1,3 @@
-# Claude entrypoint
+@AGENTS.md
 
-Read [AGENTS.md](AGENTS.md) for this repository's instructions.
+<!-- Claude Code loads this folder's AGENTS.md through the import above, including after a context compaction. Keep the instructions themselves in AGENTS.md, which Codex and other agents read too. -->
